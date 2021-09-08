@@ -14,12 +14,11 @@ import numpy as np
 4: Conv1d(channels 1/2 times, kernel_size=1)
 5: Conv1d(channels 1/2 times, kernel_size=3)
 6: Conv1d(channels 1/2 times, kernel_size=5)
-7: MaxPool1d(kernel_size=1)
-8: MaxPool1d(kernel_size=3)
-9: MaxPool1d(kernel_size=5)
-10: Dropout(0.5)
-11: BatchNormalization
-12: ReLU
+7: MaxPool1d(kernel_size=3)
+8: MaxPool1d(kernel_size=5)
+9: Dropout(0.5)
+10: BatchNormalization
+11: ReLU
 '''
 
 use_cuda = True
@@ -76,19 +75,16 @@ class Target_Net(nn.Module):
                 self.signal_length -= 4
                 self.in_channels = out_channels
             if net_structure == 7:
-                model.append(nn.MaxPool1d(kernel_size=1))
-                self.signal_length = self.signal_length // 1
-            if net_structure == 8:
                 model.append(nn.MaxPool1d(kernel_size=3))
                 self.signal_length = self.signal_length // 3
-            if net_structure == 9:
+            if net_structure == 8:
                 model.append(nn.MaxPool1d(kernel_size=5))
                 self.signal_length = self.signal_length // 5
-            if net_structure == 10:
+            if net_structure == 9:
                 model.append(nn.Dropout(0.5))
-            if net_structure == 11:
+            if net_structure == 10:
                 model.append(nn.BatchNorm1d(self.in_channels))
-            if net_structure == 12:
+            if net_structure == 11:
                 model.append(nn.ReLU())
         self.last_layer = nn.Linear(self.signal_length * self.in_channels, 4)
 
